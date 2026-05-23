@@ -22,6 +22,10 @@
 
 [Version 1.17.0](https://github.com/gabime/spdlog/releases/tag/v1.17.0)
 
+## chriskohlhoff/asio
+
+[tag 1.38.0](https://github.com/chriskohlhoff/asio/tree/asio-1-38-0)
+
 
 ## 一些小说明
 
