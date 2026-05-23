@@ -21,3 +21,15 @@
 ## gabime/spdlog
 
 [Version 1.17.0](https://github.com/gabime/spdlog/releases/tag/v1.17.0)
+
+
+## 一些小说明
+
+### spdlog
+
+如果使用WriteConsoleW，定义：
+
+```cmake
+add_definitions(-DSPDLOG_UTF8_TO_WCHAR_CONSOLE)
+add_definitions(-DSPDLOG_WCHAR_TO_UTF8_SUPPORT)
+```
