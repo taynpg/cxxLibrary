@@ -1,5 +1,71 @@
 # cxxLibray
 
+## cmake常用
+
+部分一：
+
+```cmake
+cmake_minimum_required(VERSION 3.16)
+
+project(Demo VERSION 0.1.0 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+if(MSVC)
+    add_compile_options(/utf-8)
+    #add_compile_options(/source-charset:utf-8)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+    add_definitions(-D_WIN32_WINNT=0x0601)
+endif()
+
+include_directories(C:/local/cxxLibrary/include)
+add_executable(Demo main.cpp)
+```
+
+部分二：
+
+```cmake
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND CMAKE_SYSTEM_NAME MATCHES "Windows")
+    MESSAGE(STATUS "Csp Add MinGW Param.")
+    add_compile_options(-finput-charset=utf-8)
+    add_compile_options(-fexec-charset=gbk)
+    set(COMPILER_ID "mingw")
+    get_filename_component(CXX_COMPILER_PATH ${CMAKE_CXX_COMPILER} DIRECTORY)
+    set(MINGW32_DLLS 
+    "${CXX_COMPILER_PATH}/libgcc_s_dw2-1.dll"
+    "${CXX_COMPILER_PATH}/libstdc++-6.dll"
+    "${CXX_COMPILER_PATH}/libwinpthread-1.dll")
+    install(FILES ${MINGW32_DLLS} DESTINATION bin)
+endif()
+```
+
+## CXX常用
+
+```c++
+#pragma once
+
+#if defined(_WIN32) || defined(_WIN64)
+#ifdef LIBRARY_EXPORTS
+#define EXPORT_API __declspec(dllexport)
+#else
+#define EXPORT_API __declspec(dllimport)
+#endif
+#else
+#define EXPORT_API __attribute__((visibility("default")))
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+EXPORT_API int add(int a, int b);
+
+#ifdef __cplusplus
+}
+#endif
+```
+
 ## nlohmann/json
 
 [Release JSON for Modern C++ version 3.12.0 · nlohmann/json](https://github.com/nlohmann/json/releases/tag/v3.12.0)
