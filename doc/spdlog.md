@@ -9,13 +9,13 @@ bool initLogger()
 {
     try {
         spdlog::level::level_enum lv = spdlog::level::trace;
-        
+
         // auto file_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>("xx", 1024 * 50, 3);
         auto file_sink = std::make_shared<spdlog::sinks::daily_file_sink_mt>(logPath_, 0, 0);
         auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
 
-        file_sink->set_pattern("[%Y-%m-%d %H:%M:%S.%e][%l]: %v\n    =>%s:%#");
-        console_sink->set_pattern("%^[%H:%M:%S.%e][%l]: %v%$\n    =>%s:%#");
+        file_sink->set_pattern("[%Y-%m-%d %H:%M:%S.%e][%7l]: %v\n  @%s:%#,%t");
+        console_sink->set_pattern("%^[%H:%M:%S.%e][%7l]: %v%$\n  @%s:%#,%t");
         std::vector<spdlog::sink_ptr> sinks{file_sink, console_sink};
         logger_ = std::make_shared<spdlog::logger>(markStr_, sinks.begin(), sinks.end());
 

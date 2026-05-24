@@ -117,3 +117,16 @@ add_definitions(-DSPDLOG_WCHAR_TO_UTF8_SUPPORT)
 # 如果需要Debug和Trace生效，还需要
 add_definitions(-DSPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
 ```
+
+如果自定义等级名称：
+
+```c++
+#if __cplusplus >= 201703L
+#include <string_view>
+using namespace std::string_view_literals;
+#define SPDLOG_LEVEL_NAMES {"TRACE"sv, "DEBUG"sv, "INFO"sv, "WARN"sv, "ERROR"sv, "CRIT"sv, "OFF"sv}
+#else
+#define SPDLOG_LEVEL_NAMES {"TRACE", "DEBUG", "INFO", "WARN", "ERROR", "CRIT", "OFF"}
+#endif
+```
+
