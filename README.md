@@ -40,6 +40,17 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" AND CMAKE_SYSTEM_NAME MATCHES "Windows")
 endif()
 ```
 
+部分三：
+
+```cmake
+list(APPEND CMAKE_PREFIX_PATH ${CMAKE_CURRENT_LIST_DIR}/3rd/binary/mingw64)
+
+set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib/${CMAKE_BUILD_TYPE})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin/${CMAKE_BUILD_TYPE}/)
+```
+
+
+
 ## CXX常用
 
 ```c++
@@ -102,4 +113,7 @@ EXPORT_API int add(int a, int b);
 ```cmake
 add_definitions(-DSPDLOG_UTF8_TO_WCHAR_CONSOLE)
 add_definitions(-DSPDLOG_WCHAR_TO_UTF8_SUPPORT)
+
+# 如果需要Debug和Trace生效，还需要
+add_definitions(-DSPDLOG_ACTIVE_LEVEL=SPDLOG_LEVEL_TRACE)
 ```
