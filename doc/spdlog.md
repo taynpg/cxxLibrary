@@ -5,7 +5,7 @@
 #include <spdlog/sinks/daily_file_sink.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
 
-bool initLogger()
+bool Logger::initLogger()
 {
     try {
         spdlog::level::level_enum lv = spdlog::level::trace;
@@ -14,14 +14,16 @@ bool initLogger()
         auto file_sink = std::make_shared<spdlog::sinks::daily_file_sink_mt>(logPath_, 0, 0);
         auto console_sink = std::make_shared<spdlog::sinks::stdout_color_sink_mt>();
 
-        file_sink->set_pattern("[%Y-%m-%d %H:%M:%S.%e][%7l]: %v\n  @%s:%#,%t");
-        console_sink->set_pattern("%^[%H:%M:%S.%e][%7l]: %v%$\n  @%s:%#,%t");
+        file_sink->set_pattern("[%Y-%m-%d %H:%M:%S.%e][%l]: %v\n    @%s:%!:%#,%t\n");
+        console_sink->set_pattern("%H:%M:%S.%e %^[%l]: %v%$\n    @%s:%!:%#,%t\n");
         std::vector<spdlog::sink_ptr> sinks{file_sink, console_sink};
         logger_ = std::make_shared<spdlog::logger>(markStr_, sinks.begin(), sinks.end());
 
         spdlog::register_logger(logger_);
         spdlog::set_default_logger(logger_);
         spdlog::set_level(lv);
+        spdlog::flush_on(lv);
+        // spdlog::flush_every(std::chrono::seconds(5));
 
         return true;
     } catch (const std::exception& e) {
